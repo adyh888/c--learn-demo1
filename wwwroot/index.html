@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户管理</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .user-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        input, button {
+            padding: 8px;
+            margin: 5px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<h1>用户管理系统</h1>
+
+<div>
+    <h2>创建用户</h2>
+    <input type="text" id="name" placeholder="姓名">
+    <input type="email" id="email" placeholder="邮箱">
+    <input type="number" id="age" placeholder="年龄">
+    <button onclick="createUser()">创建</button>
+    <div id="error" class="error"></div>
+</div>
+
+<div>
+    <h2>用户列表</h2>
+    <button onclick="loadUsers()">刷新</button>
+    <div id="users"></div>
+</div>
+
+<script>
+    const API_URL = 'http://localhost:5185/api/user';
+
+    // 加载用户列表
+    async function loadUsers() {
+        try {
+            const response = await fetch(API_URL);
+            const users = await response.json();
+
+            const usersDiv = document.getElementById('users');
+            usersDiv.innerHTML = users.map(user => `
+                    <div class="user-card">
+                        <strong>${user.name}</strong> (${user.age}岁)
+                        <br>📧 ${user.email}
+                        <br>
+                        <button onclick="deleteUser(${user.id})">删除</button>
+                    </div>
+                `).join('');
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    // 创建用户
+    async function createUser() {
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const age = parseInt(document.getElementById('age').value);
+
+        try {
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name, email, age })
+            });
+
+            if (!response.ok) {
+                const error = await response.json();
+                document.getElementById('error').textContent =
+                    JSON.stringify(error, null, 2);
+                return;
+            }
+
+            document.getElementById('error').textContent = '';
+            document.getElementById('name').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('age').value = '';
+
+            loadUsers();
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    // 删除用户
+    async function deleteUser(id) {
+        if (!confirm('确定删除？')) return;
+
+        try {
+            await fetch(`${API_URL}/${id}`, {
+                method: 'DELETE'
+            });
+            loadUsers();
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    // 页面加载时获取用户列表
+    loadUsers();
+</script>
+</body>
+</html>

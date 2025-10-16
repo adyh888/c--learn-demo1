@@ -1,0 +1,6 @@
+@Day2RoutingAPI_HostAddress = http://localhost:5185
+
+GET {{Day2RoutingAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

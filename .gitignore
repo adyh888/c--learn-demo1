@@ -1,0 +1,34 @@
+cat > .gitignore << 'EOF'
+# .NET build artifacts
+bin/
+obj/
+[Bb]uild/
+[Ll]og/
+*.user
+*.suo
+*.cache
+*.tmp
+*.log
+*.db
+*.db-shm
+*.db-wal
+
+# IDE/editor
+.vs/
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node (若有前端)
+node_modules/
+
+# Publish outputs
+**/publish/
+**/out/
+
+# Secrets (如有)
+*.secret.json
+EOF
