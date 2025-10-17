@@ -1,0 +1,6 @@
+@Day3DeviceAPI_HostAddress = http://localhost:5189
+
+GET {{Day3DeviceAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
