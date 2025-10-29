@@ -135,7 +135,7 @@ public class DeviceService:IDevicesService
         }
         
         // 如果更新IP，检查是否重复
-        if (dto.IpAddress != null && dto.IpAddress != existingDevice.IpAddress)
+        if (dto.IpAddress != null && dto.IpAddress != device.IpAddress)
         {
             if (await _deviceRepository.ExistsByIpAsync(dto.IpAddress))
             {
@@ -147,7 +147,7 @@ public class DeviceService:IDevicesService
         existingDevice.Name = dto.Name ?? existingDevice.Name;
         existingDevice.Description = dto.Description ?? existingDevice.Description;
         existingDevice.IpAddress = dto.IpAddress ?? existingDevice.IpAddress;
-        existingDevice.Port = dto.Port ?? existingDevice.Port;
+        existingDevice.Port = dto.Port.Value ?? existingDevice.Port;
         
         var updatedDevice = await _deviceRepository.UpdateAsync(existingDevice);
         
@@ -222,6 +222,7 @@ public class DeviceService:IDevicesService
         
         return new DeviceStatistcsDto
         {
+            TotalDevices = totalDevices,
             TotalDevices = total,
             OnlineDevices = online,
             OfflineDevices = offline,

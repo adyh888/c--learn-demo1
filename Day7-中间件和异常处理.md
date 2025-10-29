@@ -1,7 +1,7 @@
 # Day 7: 中间件(Middleware)和全局异常处理
 
 > **学习目标**: 理解中间件管道、实现全局异常处理和日志
-> 
+>
 > **预计时间**: 2-3小时
 
 ---
@@ -252,6 +252,7 @@ namespace Day7MiddlewareAPI.Middleware
 ```
 
 **输出示例:**
+
 ```
 收到请求: GET /api/device 来自 127.0.0.1
 完成响应: GET /api/device 200 耗时 45ms
@@ -453,6 +454,7 @@ app.Run();
 ```
 
 **日志级别说明:**
+
 ```
 Trace    → 最详细（开发调试）
 Debug    → 调试信息
@@ -508,6 +510,7 @@ app.MapHealthChecks("/health");
 ```
 
 **访问 `/health`:**
+
 ```json
 {
   "status": "Healthy",
@@ -583,6 +586,7 @@ public async Task<IActionResult> UpdateDevice(int id, [FromBody] UpdateDeviceDto
 ## 📝 今日总结
 
 ### ✅ 你学会了：
+
 - [x] 中间件的概念和工作原理
 - [x] 全局异常处理
 - [x] 请求日志记录
@@ -593,19 +597,20 @@ public async Task<IActionResult> UpdateDevice(int id, [FromBody] UpdateDeviceDto
 
 ### 🔑 中间件 vs Express.js对比：
 
-| ASP.NET Core | Express.js | 说明 |
-|--------------|-----------|------|
-| `app.UseMiddleware<T>()` | `app.use(fn)` | 注册中间件 |
-| `await next()` | `next()` | 调用下一个 |
-| `HttpContext` | `req, res` | 请求上下文 |
-| `ILogger` | `console.log` | 日志记录 |
-| `ExceptionMiddleware` | `error handler` | 异常处理 |
+| ASP.NET Core             | Express.js      | 说明    |
+|--------------------------|-----------------|-------|
+| `app.UseMiddleware<T>()` | `app.use(fn)`   | 注册中间件 |
+| `await next()`           | `next()`        | 调用下一个 |
+| `HttpContext`            | `req, res`      | 请求上下文 |
+| `ILogger`                | `console.log`   | 日志记录  |
+| `ExceptionMiddleware`    | `error handler` | 异常处理  |
 
 ---
 
 ## 🎯 明日预告：Day 8 - MQTT协议入门
 
 明天开始进入物联网协议！你将学习：
+
 - MQTT协议原理
 - 发布/订阅模式
 - MQTT客户端实现

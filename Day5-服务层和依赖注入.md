@@ -1,9 +1,9 @@
 # Day 5: 服务层架构和依赖注入
 
 > **学习目标**: 理解分层架构、掌握依赖注入、实现业务逻辑层
-> 
+>
 > **预计时间**: 2-3小时
-> 
+>
 > **前置知识**: 完成Day 1-4的学习
 
 ---
@@ -11,6 +11,7 @@
 ## 📚 今日知识点
 
 ### 核心内容
+
 1. 什么是依赖注入（DI）
 2. 为什么需要服务层
 3. Repository模式
@@ -56,6 +57,7 @@ public async Task<IActionResult> CreateDevice([FromBody] Device device)
 ```
 
 **问题**:
+
 - Controller职责过多（验证、业务逻辑、数据访问、日志、通知...）
 - 代码难以测试
 - 代码难以复用
@@ -87,6 +89,7 @@ public async Task<IActionResult> CreateDevice([FromBody] Device device)
 ```
 
 **🔵 前端类比:**
+
 ```
 React组件 (Component)          ← Controller
     ↓
@@ -161,6 +164,7 @@ namespace Day5ServiceLayerAPI.Repositories.Interfaces
 ```
 
 **🔵 前端对比:**
+
 ```typescript
 // TypeScript接口
 interface DeviceRepository {
@@ -264,6 +268,7 @@ namespace Day5ServiceLayerAPI.Repositories.Implementations
 ```
 
 **📝 Repository模式的好处:**
+
 - 封装数据访问逻辑
 - 易于测试（可以mock）
 - 可以切换数据源（从SQLite换成PostgreSQL，只需改Repository实现）
@@ -622,6 +627,7 @@ namespace Day5ServiceLayerAPI.Services.Implementations
 ```
 
 **📝 Service层的职责:**
+
 - ✅ 业务逻辑（验证IP重复、更新设备状态等）
 - ✅ 协调多个Repository
 - ✅ 数据转换（Model ↔ DTO）
@@ -766,6 +772,7 @@ namespace Day5ServiceLayerAPI.Controllers
 ```
 
 **对比：Controller变得非常简洁！**
+
 - 只负责接收请求、调用Service、返回响应
 - 没有业务逻辑
 - 易于测试
@@ -817,13 +824,14 @@ app.Run();
 
 **📝 DI生命周期:**
 
-| 生命周期 | 说明 | 使用场景 |
-|---------|------|----------|
-| **Transient** | 每次请求都创建新实例 | 轻量级、无状态的服务 |
-| **Scoped** | 每个HTTP请求创建一个实例 | Repository、DbContext |
-| **Singleton** | 整个应用只有一个实例 | 配置、缓存 |
+| 生命周期          | 说明             | 使用场景                 |
+|---------------|----------------|----------------------|
+| **Transient** | 每次请求都创建新实例     | 轻量级、无状态的服务           |
+| **Scoped**    | 每个HTTP请求创建一个实例 | Repository、DbContext |
+| **Singleton** | 整个应用只有一个实例     | 配置、缓存                |
 
 **🔵 前端类比:**
+
 ```typescript
 // React Context/Provider
 <DeviceServiceProvider>  {/* Singleton/Scoped */}
@@ -836,6 +844,7 @@ app.Run();
 ## 📝 今日总结
 
 ### ✅ 你学会了：
+
 - [x] 依赖注入（DI）的原理和使用
 - [x] Repository模式
 - [x] Service层设计
@@ -846,18 +855,21 @@ app.Run();
 ### 🔑 架构对比：
 
 **没有分层（Day 4）:**
+
 ```
 Controller → DbContext → Database
 (所有逻辑混在一起)
 ```
 
 **分层架构（Day 5）:**
+
 ```
 Controller → Service → Repository → DbContext → Database
 (职责清晰，易于维护和测试)
 ```
 
 **🔵 前端类比:**
+
 ```
 React Component → Custom Hook → API Service → Backend
 ```
@@ -867,6 +879,7 @@ React Component → Custom Hook → API Service → Backend
 ## 🎯 明日预告：Day 6 - 异步编程和LINQ高级
 
 明天你将学习：
+
 - async/await深入理解
 - LINQ高级查询
 - 性能优化

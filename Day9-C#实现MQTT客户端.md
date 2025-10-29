@@ -1,7 +1,7 @@
 # Day 9: C#实现MQTT客户端
 
 > **学习目标**: 使用MQTTnet库实现MQTT发布/订阅功能
-> 
+>
 > **预计时间**: 2-3小时
 
 ---
@@ -694,6 +694,7 @@ app.UseStaticFiles();
 ## 📝 今日总结
 
 ### ✅ 你学会了：
+
 - [x] 安装和使用MQTTnet库
 - [x] 创建MQTT客户端服务
 - [x] 发布和订阅MQTT消息
@@ -703,11 +704,11 @@ app.UseStaticFiles();
 
 ### 🔑 核心代码对比：
 
-| 功能 | C# (MQTTnet) | JavaScript (mqtt.js) |
-|-----|--------------|---------------------|
-| 连接 | `mqttClient.StartAsync()` | `mqtt.connect()` |
-| 发布 | `EnqueueAsync(message)` | `client.publish()` |
-| 订阅 | `SubscribeAsync(topic)` | `client.subscribe()` |
+| 功能 | C# (MQTTnet)                      | JavaScript (mqtt.js)   |
+|----|-----------------------------------|------------------------|
+| 连接 | `mqttClient.StartAsync()`         | `mqtt.connect()`       |
+| 发布 | `EnqueueAsync(message)`           | `client.publish()`     |
+| 订阅 | `SubscribeAsync(topic)`           | `client.subscribe()`   |
 | 接收 | `ApplicationMessageReceivedAsync` | `client.on('message')` |
 
 ---
@@ -715,6 +716,7 @@ app.UseStaticFiles();
 ## 🎯 明日预告：Day 10 - MQTT消息持久化
 
 明天你将学习：
+
 - MQTT消息存储到数据库
 - 历史数据查询
 - 数据聚合和统计

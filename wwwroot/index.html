@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>用户管理</title>
     <style>
         body {
@@ -11,16 +11,19 @@
             margin: 50px auto;
             padding: 20px;
         }
+
         .user-card {
             border: 1px solid #ddd;
             padding: 15px;
             margin: 10px 0;
             border-radius: 5px;
         }
+
         input, button {
             padding: 8px;
             margin: 5px;
         }
+
         button {
             background: #007bff;
             color: white;
@@ -28,9 +31,11 @@
             cursor: pointer;
             border-radius: 3px;
         }
+
         button:hover {
             background: #0056b3;
         }
+
         .error {
             color: red;
         }
@@ -41,9 +46,9 @@
 
 <div>
     <h2>创建用户</h2>
-    <input type="text" id="name" placeholder="姓名">
-    <input type="email" id="email" placeholder="邮箱">
-    <input type="number" id="age" placeholder="年龄">
+    <input id="name" placeholder="姓名" type="text">
+    <input id="email" placeholder="邮箱" type="email">
+    <input id="age" placeholder="年龄" type="number">
     <button onclick="createUser()">创建</button>
     <div id="error" class="error"></div>
 </div>
@@ -89,7 +94,7 @@
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ name, email, age })
+                body: JSON.stringify({name, email, age})
             });
 
             if (!response.ok) {

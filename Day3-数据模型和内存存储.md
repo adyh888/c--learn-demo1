@@ -1,9 +1,9 @@
 # Day 3: 数据模型和内存存储（CRUD完整实现）
 
 > **学习目标**: 设计数据模型、实现完整CRUD、理解对象关系
-> 
+>
 > **预计时间**: 2-3小时
-> 
+>
 > **前置知识**: 完成Day 1-2的学习
 
 ---
@@ -11,6 +11,7 @@
 ## 📚 今日知识点
 
 ### 核心内容
+
 1. 设计合理的数据模型
 2. 模型之间的关系（一对多）
 3. 使用静态集合模拟数据库
@@ -24,6 +25,7 @@
 今天我们要构建一个**设备管理系统**，为后面的MQTT/Modbus做准备。
 
 **功能需求**：
+
 - 设备的增删改查
 - 设备分类（传感器、控制器、网关等）
 - 每个设备有多条历史数据记录
@@ -143,21 +145,21 @@ interface DeviceData {
 **📝 关键概念:**
 
 1. **枚举（Enum）**
-   - C#的枚举有实际数值（可以序列化为数字）
-   - 比字符串更高效，类型更安全
+    - C#的枚举有实际数值（可以序列化为数字）
+    - 比字符串更高效，类型更安全
 
 2. **可空类型**
-   - `DateTime?` - 可以为null的DateTime
-   - `Device?` - 可以为null的Device对象
+    - `DateTime?` - 可以为null的DateTime
+    - `Device?` - 可以为null的Device对象
 
 3. **导航属性**
-   - `DataRecords` - 一个设备有多条数据（一对多）
-   - `Device` - 每条数据属于一个设备（多对一）
-   - 类似SQL的JOIN关系
+    - `DataRecords` - 一个设备有多条数据（一对多）
+    - `Device` - 每条数据属于一个设备（多对一）
+    - 类似SQL的JOIN关系
 
 4. **默认值初始化**
-   - `= string.Empty` - 避免null引用
-   - `= new List<DeviceData>()` - 初始化空列表
+    - `= string.Empty` - 避免null引用
+    - `= new List<DeviceData>()` - 初始化空列表
 
 ---
 
@@ -260,14 +262,15 @@ namespace Day3DeviceAPI.DTOs
 
 **💡 为什么要用DTO？**
 
-| 场景 | 不用DTO的问题 | 使用DTO的好处 |
-|------|--------------|--------------|
+| 场景   | 不用DTO的问题               | 使用DTO的好处   |
+|------|------------------------|------------|
 | 接收数据 | 客户端可以设置ID、CreatedAt等字段 | 只接收必要字段，安全 |
-| 返回数据 | 可能暴露敏感信息（密码、内部字段） | 只返回需要的字段 |
-| 验证 | Model混合了业务逻辑和验证逻辑 | 分离关注点，清晰 |
-| 版本控制 | API变更会影响数据库模型 | DTO可以独立演化 |
+| 返回数据 | 可能暴露敏感信息（密码、内部字段）      | 只返回需要的字段   |
+| 验证   | Model混合了业务逻辑和验证逻辑      | 分离关注点，清晰   |
+| 版本控制 | API变更会影响数据库模型          | DTO可以独立演化  |
 
 **🔵 前端类比:**
+
 - DTO ≈ 表单数据对象（FormData）
 - Model ≈ 数据库实体（Entity）
 - ResponseDto ≈ API响应格式（ViewModel）
@@ -375,6 +378,7 @@ namespace Day3DeviceAPI.Data
 ```
 
 **📝 说明:**
+
 - `static` - 静态类和属性（全局共享，类似单例）
 - 在应用运行期间数据会保留
 - 重启应用后数据会丢失（明天学数据库持久化）
@@ -706,6 +710,7 @@ curl -s $API/1/data | json_pp
 ## 📝 今日总结
 
 ### ✅ 你学会了：
+
 - [x] 设计合理的数据模型（Model）
 - [x] 使用枚举（Enum）
 - [x] DTO模式的应用
@@ -716,20 +721,21 @@ curl -s $API/1/data | json_pp
 
 ### 🔑 关键概念对比：
 
-| C#概念 | 前端对应 | 说明 |
-|--------|----------|------|
-| Model | Entity/Interface | 数据结构 |
-| DTO | FormData/ViewModel | 数据传输对象 |
-| Enum | Enum/Union Type | 枚举类型 |
-| LINQ | Array Methods | 数据查询 |
-| `static` | Global/Singleton | 静态/全局 |
-| `List<T>` | `Array<T>` | 列表/数组 |
+| C#概念      | 前端对应               | 说明     |
+|-----------|--------------------|--------|
+| Model     | Entity/Interface   | 数据结构   |
+| DTO       | FormData/ViewModel | 数据传输对象 |
+| Enum      | Enum/Union Type    | 枚举类型   |
+| LINQ      | Array Methods      | 数据查询   |
+| `static`  | Global/Singleton   | 静态/全局  |
+| `List<T>` | `Array<T>`         | 列表/数组  |
 
 ---
 
 ## 🎯 明日预告：Day 4 - Entity Framework Core + SQLite
 
 明天你将学习：
+
 - 使用真实数据库（SQLite）
 - Entity Framework Core（ORM）
 - 数据库迁移（Migrations）
@@ -759,9 +765,9 @@ curl -s $API/1/data | json_pp
    ```
 
 4. 思考：
-   - 为什么要分离Model和DTO？
-   - 如果不用LINQ，代码会变成什么样？
-   - 一对多关系在前端怎么展示？
+    - 为什么要分离Model和DTO？
+    - 如果不用LINQ，代码会变成什么样？
+    - 一对多关系在前端怎么展示？
 
 ---
 

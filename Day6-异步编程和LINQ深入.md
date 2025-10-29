@@ -1,7 +1,7 @@
 # Day 6: 异步编程(async/await)和LINQ深入
 
 > **学习目标**: 深入理解异步编程、掌握LINQ高级查询
-> 
+>
 > **预计时间**: 2-3小时
 
 ---
@@ -32,6 +32,7 @@ async Task<Data> FetchDataAsync()
 ```
 
 **关键区别:**
+
 - C#需要显式声明返回类型 `Task<T>`
 - 异步方法名通常以 `Async` 结尾（约定）
 - `Task` ≈ JavaScript的 `Promise`
@@ -103,6 +104,7 @@ var recentData = recentDataTask.Result;
 ```
 
 **🔵 JavaScript等价:**
+
 ```javascript
 // 串行
 const devices = await getDevices();
@@ -449,6 +451,7 @@ public async Task<List<TrendData>> GetDataTrendAsync(int deviceId, int hours = 2
 ## 📝 今日总结
 
 ### ✅ 你学会了：
+
 - [x] async/await深入理解
 - [x] Task和Task<T>
 - [x] 并行异步操作
@@ -458,23 +461,24 @@ public async Task<List<TrendData>> GetDataTrendAsync(int deviceId, int hours = 2
 
 ### 🔑 LINQ vs JavaScript对比：
 
-| LINQ | JavaScript | 说明 |
-|------|-----------|------|
-| `.Where()` | `.filter()` | 筛选 |
-| `.Select()` | `.map()` | 映射 |
-| `.FirstOrDefault()` | `.find()` | 查找 |
-| `.Any()` | `.some()` | 存在 |
-| `.All()` | `.every()` | 全部 |
-| `.Count()` | `.length` | 计数 |
-| `.OrderBy()` | `.sort()` | 排序 |
-| `.GroupBy()` | - | 分组 |
-| `.Sum()` | `.reduce()` | 求和 |
+| LINQ                | JavaScript  | 说明 |
+|---------------------|-------------|----|
+| `.Where()`          | `.filter()` | 筛选 |
+| `.Select()`         | `.map()`    | 映射 |
+| `.FirstOrDefault()` | `.find()`   | 查找 |
+| `.Any()`            | `.some()`   | 存在 |
+| `.All()`            | `.every()`  | 全部 |
+| `.Count()`          | `.length`   | 计数 |
+| `.OrderBy()`        | `.sort()`   | 排序 |
+| `.GroupBy()`        | -           | 分组 |
+| `.Sum()`            | `.reduce()` | 求和 |
 
 ---
 
 ## 🎯 明日预告：Day 7 - 中间件和异常处理
 
 明天你将学习：
+
 - ASP.NET Core中间件管道
 - 全局异常处理
 - 日志系统

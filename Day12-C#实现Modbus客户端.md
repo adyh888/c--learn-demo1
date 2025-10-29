@@ -1,7 +1,7 @@
 # Day 12: C#实现Modbus客户端
 
 > **学习目标**: 使用NModbus库实现Modbus TCP通信
-> 
+>
 > **预计时间**: 2-3小时
 
 ---
@@ -670,6 +670,7 @@ curl -X POST http://localhost:5000/api/modbus/write \
 ## 📝 今日总结
 
 ### ✅ 你学会了：
+
 - [x] 使用NModbus库
 - [x] 实现Modbus TCP客户端
 - [x] 读取和解析寄存器数据
@@ -690,6 +691,7 @@ MQTT发布 → Broker → 订阅者 → 监控/存储
 ## 🎯 明日预告：Day 13 - MQTT+Modbus整合
 
 明天你将学习：
+
 - 完整的IoT网关实现
 - Modbus和MQTT无缝整合
 - 设备管理和配置

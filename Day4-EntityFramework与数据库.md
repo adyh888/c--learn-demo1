@@ -1,9 +1,9 @@
 # Day 4: Entity Framework Core + SQLite数据库
 
 > **学习目标**: 使用真实数据库持久化数据，掌握ORM基础
-> 
+>
 > **预计时间**: 2-3小时
-> 
+>
 > **前置知识**: 完成Day 1-3的学习
 
 ---
@@ -11,6 +11,7 @@
 ## 📚 今日知识点
 
 ### 核心内容
+
 1. 什么是ORM（对象关系映射）
 2. Entity Framework Core基础
 3. SQLite数据库的使用
@@ -22,6 +23,7 @@
 ## 🎯 什么是ORM？
 
 **🔵 前端类比理解:**
+
 - **ORM** (Object-Relational Mapping) ≈ Prisma / TypeORM / Sequelize
 - 让你用**对象**的方式操作数据库，而不是写SQL语句
 - Entity Framework Core ≈ Node.js的Prisma
@@ -69,6 +71,7 @@ dotnet ef
 ```
 
 **📦 包说明:**
+
 - `Microsoft.EntityFrameworkCore.Sqlite` - SQLite数据库提供程序
 - `Microsoft.EntityFrameworkCore.Design` - 设计时工具（用于迁移）
 - `dotnet-ef` - EF Core命令行工具
@@ -164,14 +167,14 @@ namespace Day4DatabaseAPI.Models
 
 **📝 EF Core特性（Attributes）说明:**
 
-| 特性 | 作用 | SQL等价 |
-|------|------|---------|
-| `[Key]` | 标记主键 | `PRIMARY KEY` |
-| `[Required]` | 非空 | `NOT NULL` |
-| `[MaxLength(100)]` | 最大长度 | `VARCHAR(100)` |
-| `[ForeignKey]` | 外键 | `FOREIGN KEY` |
+| 特性                    | 作用     | SQL等价            |
+|-----------------------|--------|------------------|
+| `[Key]`               | 标记主键   | `PRIMARY KEY`    |
+| `[Required]`          | 非空     | `NOT NULL`       |
+| `[MaxLength(100)]`    | 最大长度   | `VARCHAR(100)`   |
+| `[ForeignKey]`        | 外键     | `FOREIGN KEY`    |
 | `[DatabaseGenerated]` | 数据库生成值 | `AUTO_INCREMENT` |
-| `virtual` | 延迟加载 | - |
+| `virtual`             | 延迟加载   | -                |
 
 ---
 
@@ -368,6 +371,7 @@ app.Run();
 ```
 
 **📝 说明:**
+
 - `ConnectionStrings` - 数据库连接字符串
 - `Data Source=devices.db` - SQLite数据库文件名
 - `AddDbContext` - 注册DbContext到依赖注入容器
@@ -385,10 +389,12 @@ dotnet ef database update
 ```
 
 **执行后你会看到:**
+
 - `Migrations/` 文件夹 - 包含迁移文件
 - `devices.db` 文件 - SQLite数据库文件
 
 **🔵 前端对比:**
+
 ```bash
 # Prisma 等价命令
 npx prisma migrate dev --name init
@@ -396,6 +402,7 @@ npx prisma generate
 ```
 
 **📝 迁移命令:**
+
 ```bash
 # 常用EF Core命令
 dotnet ef migrations add <名称>           # 创建迁移
@@ -626,19 +633,19 @@ namespace Day4DatabaseAPI.Controllers
 
 **📝 关键方法对比:**
 
-| EF Core方法 | SQL等价 | JavaScript/Prisma等价 |
-|------------|---------|----------------------|
-| `ToListAsync()` | `SELECT *` | `findMany()` |
-| `FirstOrDefaultAsync()` | `SELECT TOP 1` | `findFirst()` |
-| `FindAsync(id)` | `SELECT WHERE id=` | `findUnique()` |
-| `Add()` | `INSERT` | `create()` |
-| `Remove()` | `DELETE` | `delete()` |
-| `SaveChangesAsync()` | `COMMIT` | (自动提交) |
-| `Include()` | `JOIN` | `include` |
-| `Where()` | `WHERE` | `where` |
-| `OrderBy()` | `ORDER BY` | `orderBy` |
-| `GroupBy()` | `GROUP BY` | `groupBy` |
-| `CountAsync()` | `COUNT(*)` | `count()` |
+| EF Core方法               | SQL等价              | JavaScript/Prisma等价 |
+|-------------------------|--------------------|---------------------|
+| `ToListAsync()`         | `SELECT *`         | `findMany()`        |
+| `FirstOrDefaultAsync()` | `SELECT TOP 1`     | `findFirst()`       |
+| `FindAsync(id)`         | `SELECT WHERE id=` | `findUnique()`      |
+| `Add()`                 | `INSERT`           | `create()`          |
+| `Remove()`              | `DELETE`           | `delete()`          |
+| `SaveChangesAsync()`    | `COMMIT`           | (自动提交)              |
+| `Include()`             | `JOIN`             | `include`           |
+| `Where()`               | `WHERE`            | `where`             |
+| `OrderBy()`             | `ORDER BY`         | `orderBy`           |
+| `GroupBy()`             | `GROUP BY`         | `groupBy`           |
+| `CountAsync()`          | `COUNT(*)`         | `count()`           |
 
 **📝 异步方法（async/await）:**
 
@@ -651,6 +658,7 @@ var devices = await _context.Devices.ToListAsync();
 ```
 
 类似JavaScript：
+
 ```javascript
 // ❌ 同步
 const data = fs.readFileSync('file.txt');
@@ -690,6 +698,7 @@ curl http://localhost:5000/api/device/statistics
 ## 📝 今日总结
 
 ### ✅ 你学会了：
+
 - [x] Entity Framework Core的基础
 - [x] 使用SQLite数据库
 - [x] 数据库迁移（Migrations）
@@ -700,21 +709,22 @@ curl http://localhost:5000/api/device/statistics
 
 ### 🔑 关键对比：
 
-| EF Core | Prisma | 说明 |
-|---------|--------|------|
-| `DbContext` | `PrismaClient` | 数据库客户端 |
-| `DbSet<T>` | `model` | 表/模型 |
-| `OnModelCreating` | `schema.prisma` | 模型配置 |
-| `migrations add` | `migrate dev` | 创建迁移 |
-| `database update` | `migrate deploy` | 应用迁移 |
-| `Include()` | `include` | 关联查询 |
-| `SaveChangesAsync()` | (自动) | 保存更改 |
+| EF Core              | Prisma           | 说明     |
+|----------------------|------------------|--------|
+| `DbContext`          | `PrismaClient`   | 数据库客户端 |
+| `DbSet<T>`           | `model`          | 表/模型   |
+| `OnModelCreating`    | `schema.prisma`  | 模型配置   |
+| `migrations add`     | `migrate dev`    | 创建迁移   |
+| `database update`    | `migrate deploy` | 应用迁移   |
+| `Include()`          | `include`        | 关联查询   |
+| `SaveChangesAsync()` | (自动)             | 保存更改   |
 
 ---
 
 ## 🎯 明日预告：Day 5 - 服务层和依赖注入
 
 明天你将学习：
+
 - 什么是依赖注入（DI）
 - 服务层（Service Layer）设计
 - Repository模式
