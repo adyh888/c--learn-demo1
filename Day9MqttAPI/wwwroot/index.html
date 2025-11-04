@@ -77,11 +77,11 @@
 
     function renderDevices() {
         const container = document.getElementById('devices');
-        //devices 里的item 不区分大小写
-        container.innerHTML = Object.values(devices).map(device => `
+        container.innerHTML = Object.values(devices).map(device =>
+            `
                 <div class="device-card">
                     <h3>设备 ${device.DeviceId}</h3>
-                    <div class="value">${device.Value.toFixed(2)} ${device.Unit}</div>
+                    <div class="value">${device.Value && device.Value.toFixed(2)} ${device.Unit}</div>
                     <div>${device.DataType}</div>
                     <div>时间: ${new Date(device.Timestamp).toLocaleTimeString()}</div>
                 </div>
