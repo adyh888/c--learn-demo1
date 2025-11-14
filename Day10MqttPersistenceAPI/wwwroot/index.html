@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>MQTT设备监控</title>
+    <style>
+        body {
+            font-family: Arial;
+            max-width: 1200px;
+            margin: 50px auto;
+        }
+
+        .device-card {
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 5px;
+            display: inline-block;
+            width: 300px;
+        }
+
+        .value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+        }
+    </style>
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+</head>
+<body>
+<h1>🏭 MQTT设备实时监控</h1>
+
+<div>
+    <button onclick="connectMqtt()">连接MQTT</button>
+    <button onclick="publishTest()">发布测试消息</button>
+    <span id="status">未连接</span>
+</div>
+
+<div id="devices"></div>
+
+<script>
+    let client = null;
+    const devices = {};
+
+    function connectMqtt() {
+        client = mqtt.connect('ws://broker.emqx.io:8083/mqtt');
+
+        client.on('connect', () => {
+            document.getElementById('status').textContent = '✅ 已连接';
+            console.log('MQTT连接成功');
+
+            // 订阅所有设备数据
+            client.subscribe('factory/device/+/data');
+            client.subscribe('factory/device/+/status');
+        });
+
+        client.on('message', (topic, message) => {
+            const data = JSON.parse(message.toString());
+            console.log('收到消息:', topic, data);
+
+            if (topic.includes('/data')) {
+                updateDeviceData(data);
+            }
+        });
+    }
+
+    function updateDeviceData(data) {
+        devices[data.deviceId] = data;
+        renderDevices();
+    }
+
+    function renderDevices() {
+        const container = document.getElementById('devices');
+        container.innerHTML = Object.values(devices).map(device =>
+            `
+                <div class="device-card">
+                    <h3>设备 ${device.DeviceId}</h3>
+                    <div class="value">${device.Value && device.Value.toFixed(2)} ${device.Unit}</div>
+                    <div>${device.DataType}</div>
+                    <div>时间: ${new Date(device.Timestamp).toLocaleTimeString()}</div>
+                </div>
+            `).join('');
+    }
+
+    function publishTest() {
+        if (!client) {
+            alert('请先连接MQTT');
+            return;
+        }
+
+        const message = {
+            DeviceId: 999,
+            DataType: 'temperature',
+            Value: 25.5,
+            Unit: '°C',
+            Timestamp: new Date().toISOString()
+        };
+
+        client.publish('factory/device/999/data', JSON.stringify(message));
+        console.log('发布测试消息');
+    }
+
+    // 页面加载时自动连接
+    window.onload = () => {
+        connectMqtt();
+    };
+</script>
+</body>
+</html>

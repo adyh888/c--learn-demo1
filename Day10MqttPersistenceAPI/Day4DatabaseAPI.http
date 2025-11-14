@@ -1,0 +1,6 @@
+@Day4DatabaseAPI_HostAddress = http://localhost:5276
+
+GET {{Day4DatabaseAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
